@@ -5,6 +5,7 @@
 """
 
 import json
+import os
 import re
 import hashlib
 import tempfile

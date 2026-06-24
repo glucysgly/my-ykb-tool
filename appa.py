@@ -20,7 +20,33 @@ import streamlit as st
 # ============================================================
 # 核心函数（完全复用，路径已全部改为临时目录）
 # ============================================================
+# ============================================================
+# 登录验证（新增代码，直接写死密码）
+# ============================================================
 
+def check_password():
+    """显示密码输入框，验证通过才让进"""
+    if "logged_in" not in st.session_state:
+        st.session_state.logged_in = False
+    if st.session_state.logged_in:
+        return True
+
+    st.title("🔒 请输入访问密码")
+    password_input = st.text_input("密码", type="password", placeholder="请输入密码")
+    if st.button("登录", type="primary"):
+        # 密码直接写死在代码里（注意：公开仓库可见，建议仓库设为私有）
+        if password_input == "268369":
+            st.session_state.logged_in = True
+            st.rerun()
+        else:
+            st.error("❌ 密码错误，请重试")
+    return False
+
+# 调用验证，如果未登录则停止执行后续内容
+if not check_password():
+    st.stop()
+
+# ============================================================
 def fix_encoding(text):
     if not text: return text
     try: return text.encode('latin1').decode('utf-8')
